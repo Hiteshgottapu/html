@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dot Connection Game</title>
+    <script>
+        
+    </script>
+    <style>
+      .dot {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: black;
+        margin: 10px;
+      }
+      .line {
+        position: absolute;
+        background-color: black;
+        height: 2px;
+        transform-origin: 0% 50%;
+      }
+      .line.ab {
+        width: 60px;
+        transform: rotate(45deg);
+        top: 40px;
+        left: 45px;
+      }
+      .line.cd {
+        width: 60px;
+        transform: rotate(45deg);
+        top: 100px;
+        left: 45px;
+      }
+      .line.ef {
+        width: 60px;
+        transform: rotate(45deg);
+        top: 160px;
+        left: 45px;
+      }
+      button {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="dot">A</div>
+      <div class="dot">B</div>
+    </div>
+    <div>
+      <div class="dot">C</div>
+      <div class="dot">D</div>
+    </div>
+    <div>
+      <div class="dot">E</div>
+      <div class="dot">F</div>
+    </div>
+    <button id="check-button">Check</button>
+    <button id="reset-button">Reset</button>
+    <script>
+      const lines = document.querySelectorAll('.line');
+      const checkButton = document.querySelector('#check-button');
+      const resetButton = document.querySelector('#reset-button');
+
+      function resetLines() {
+        lines.forEach(line => {
+          line.style.width = '0';
+        });
+      }
+
+      function checkConnections() {
+        const abLine = document.querySelector('.line.ab');
+        const cdLine = document.querySelector('.line.cd');
+        const efLine = document.querySelector('.line.ef');
+        const abWidth = abLine.style.width;
+        const cdWidth = cdLine.style.width;
+        const efWidth = efLine.style.width;
+        if (abWidth === '60px' && cdWidth === '60px' && efWidth === '60px') {
+          alert('Right connections!');
+        } else {
+          alert('Wrong connections!');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        resetLines();
+
+        document.querySelectorAll('.dot').forEach(dot => {
+          dot.addEventListener('mousedown', () => {
+            const lineClass = `line ${dot.textContent.toLowerCase()}`;
+            const line = document.querySelector(`.${lineClass}`);
+            line.style.width = '60px';
+          });
+        });
+
+        checkButton.addEventListener('click', () => {
+          checkConnections();
+        });
+
+        resetButton.addEventListener('click', () => {
+          resetLines();
+        });
+      });
+    </script>
+  </body>
+</html>
